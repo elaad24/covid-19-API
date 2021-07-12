@@ -15,6 +15,8 @@ orderBy - to set by what the data will order
 skip - on how many to skip  
 toShow- how many to show 
 select - to determan what field to show (can be multipal , need to saperat by comme [,])
+reverseOrder- to show the data in revere order (from big to small)
+
 */
 
 /* GET all info in db . */
@@ -23,9 +25,8 @@ router.get("/", function (req, res) {
   let skip = req.query.skip ? req.query.skip : 0;
   let toShow = req.query.toShow ? req.query.toShow : 500;
   let select = req.query.select ? req.query.select : "*";
-  let reverseOrder = req.query.reverseOrder ? "DESC" : "ASC";
 
-  let myQuery = `SELECT ${select} FROM covidtable ORDER BY '${orderBy}' LIMIT ${skip},${toShow}  ${reverseOrder} `;
+  let myQuery = `SELECT ${select} FROM covidtable ORDER BY '${orderBy}'  LIMIT ${skip},${toShow}   `;
 
   sqlCon.query(myQuery, (err, data, fields) => {
     if (err) {
@@ -56,9 +57,8 @@ router.get("/byContinent", function (req, res) {
   let skip = req.query.skip ? req.query.skip : 0;
   let toShow = req.query.toShow ? req.query.toShow : 500;
   let select = req.query.select ? req.query.select : "*";
-  let reverseOrder = req.query.reverseOrder ? "DESC" : "ASC";
 
-  let myQuery = `SELECT ${select} FROM covidtable WHERE continent ='${continent}'  ORDER BY '${orderBy}' LIMIT ${skip},${toShow} ${reverseOrder} `;
+  let myQuery = `SELECT ${select} FROM covidtable WHERE continent ='${continent}'  ORDER BY '${orderBy}' LIMIT ${skip},${toShow}  `;
 
   sqlCon.query(myQuery, (err, data, fields) => {
     if (err) {
@@ -90,7 +90,7 @@ router.get("/byCountry/:location", function (req, res) {
       return res.status(400).json(err);
     }
 
-    resc.json(data);
+    res.status(200).json(data);
   });
 });
 
