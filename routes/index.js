@@ -15,9 +15,7 @@ orderBy - to set who the data will be order
 skip - on how many to skip  
 toShow- how many to show 
 select - to determine  what field to show (can be multiple , need to separate by comma [,])
-
-// ascend - to set if the data wiwll show on asnding order or decending : defulat descend
-
+descend - to set if the data will show on descend order or descnding : defulat ascending
 */
 
 /* GET all info in db . */
@@ -26,10 +24,10 @@ router.get("/", function (req, res) {
   let skip = req.query.skip ? req.query.skip : 0;
   let toShow = req.query.toShow ? req.query.toShow : 500;
   let select = req.query.select ? req.query.select : "*";
-  let ascend = req.query.ascend ? "ASC" : "DESC";
+  let descend = req.query.descend ? "DESC" : "ASC";
 
   let myQuery = `SELECT ${select} FROM covidtable
-   ORDER BY  covidtable.${orderBy} ${ascend}
+   ORDER BY  covidtable.${orderBy} ${descend}
     LIMIT ${skip},${toShow}   `;
 
   sqlCon.query(myQuery, (err, data, fields) => {
@@ -50,9 +48,8 @@ orderBy - to set by what the data will order
 skip - on how many to skip  
 toShow- how many to show 
 select - to determine  what field to show (can be multiple , need to separate by comma [,])
+descend - to set if the data will show on descend order or descnding : defulat ascending
 */
-
-// ascend - to set if the data wiwll show on asnding order or decending : defulat descend
 
 /* GET info by continent. */
 
@@ -62,11 +59,11 @@ router.get("/byContinent", function (req, res) {
   let skip = req.query.skip ? req.query.skip : 0;
   let toShow = req.query.toShow ? req.query.toShow : 500;
   let select = req.query.select ? req.query.select : "*";
-  let ascend = req.query.ascend ? "ASC" : "DESC";
+  let descend = req.query.descend ? "DESC" : "ASC";
 
   let myQuery = `SELECT ${select} FROM covidtable
      WHERE continent='${continent}'
-      ORDER BY covidtable.${orderBy} ${ascend} LIMIT ${skip},${toShow}  `;
+      ORDER BY covidtable.${orderBy} ${descend} LIMIT ${skip},${toShow}  `;
 
   console.log(myQuery);
 
